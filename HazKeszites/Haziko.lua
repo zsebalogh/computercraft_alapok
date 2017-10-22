@@ -1,18 +1,18 @@
 function HatizsakKiValaszt(targy)
-    for i=1, 16 do
-        info = turtle.getItemDetail(i)
-        
-        if info then
-            if info.name == targy then
-                turtle.select(i)
-            print("megvan amit kerestel")
-            else
-                print(i .. " mas van benne " .. info.name)
-            end
-        else
-            print(i .. " ures zseb")
-        end
-    end
+	for i=1, 16 do
+		info = turtle.getItemDetail(i)
+		
+		if info then
+			if string.find(info.name, targy) then
+				turtle.select(i)
+				print("megvan amit kerestel")
+			else
+				print(i .. " mas van benne " .. info.name)
+			end
+		else
+			print(i .. " ures zseb")
+		end
+	end
 end
 function fal(magas, szeles)
   for u=1, szeles do
@@ -35,7 +35,7 @@ function ajto()
   turtle.up()
   turtle.dig()
   turtle.down()
-  HatizsakKiValaszt("minecraft:wooden_door")
+  HatizsakKiValaszt("door")
   turtle.place()
   turtle.turnRight()
 end
@@ -44,67 +44,81 @@ function ablak()
   turtle.turnLeft()
   turtle.up()
   turtle.dig()
-  HatizsakKiValaszt("minecraft:glass")
+  HatizsakKiValaszt("glass")
   turtle. place()
   turtle.turnRight()
   turtle.down()
 end
 
 function teto(hosszu, szeles)
-  turtle.select(4)
-  turtle.up()
-  for i=1, 2 do
-    for w=1, hosszu do
-      turtle.placeDown()
-      turtle.forward()
-    end
+	HatizsakKiValaszt("wool")
+	for g=1, szeles / 2 do
+		turtle.up()
+		tetoH = hosszu
+		tetoSz = szeles
+		for i=1, 2 do
+			for w=1, tetoH do
+				turtle.placeDown()
+				turtle.forward()
+			end
 
-    turtle.turnLeft()
+			turtle.turnLeft()
 
-    for o=1, szeles do
-      turtle.placeDown()
-      turtle.forward()
-    end
+			for o=1, tetoSz do
+				turtle.placeDown()
+				turtle.forward()
+			end
 
-    turtle.turnLeft()
+			turtle.turnLeft()
 
-  end   
+		end
+	
+
+
+		turtle.forward()
+		turtle.turnLeft()
+		turtle.forward()
+		turtle.turnRight()
+
+		turtle.up()
+
+		for i=1, 2 do
+			for w=1, tetoH - 2 do
+				turtle.placeDown()
+				turtle.forward()
+			end
   
-  turtle.forward()
-  turtle.turnLeft()
-  turtle.forward()
-  turtle.turnRight()
+			turtle.turnLeft()
 
-  turtle.up()
-
-  for i=1, 2 do
-    for w=1, hosszu - 2 do
-      turtle.placeDown()
-      turtle.forward()
-    end
-  
-    turtle.turnLeft()
-
-    for o=1, szeles - 2 do
-      turtle.placeDown()
-      turtle.forward()
-    end
+			for o=1, tetoSz - 2 do
+				turtle.placeDown()
+				turtle.forward()
+			end
     
-    turtle.turnLeft()
-
-  end
+			turtle.turnLeft()
+		end
+		
+		tetoSZ = tetoSz - 2
+		
+		tetoH =tetoH - 2
+		
+	end
 end
 
 function haz(h, sz, m)
     for i=1, 2 do
-      HatizsakKiValaszt("minecraft:blocks")
+      HatizsakKiValaszt("brick_block")
       fal(m, h)
+      HatizsakKiValaszt("brick_block")
       turtle.forward()
       turtle.turnLeft()
+      HatizsakKiValaszt("brick_block")
       turtle.back()
       fal(m, sz)
+      HatizsakKiValaszt("brick_block")
       turtle.forward()
       turtle.turnLeft()
+      HatizsakKiValaszt("brick_block")
       turtle.back()
   end
 
@@ -116,7 +130,7 @@ function haz(h, sz, m)
   turtle.up()
   turtle.dig()
   turtle.down()
-  HatizsakKiValaszt("minecraft:wooden_door")
+  HatizsakKiValaszt("door")
   turtle.place()
 
   turtle.turnRight()
@@ -125,7 +139,7 @@ function haz(h, sz, m)
   turtle.turnLeft()
   turtle.up()
   turtle.dig()
-  HatizsakKiValaszt("minecraft:glass")
+  HatizsakKiValaszt("glass")
   turtle.place()
   turtle.turnRight()
   turtle.down()
@@ -142,7 +156,9 @@ function haz(h, sz, m)
 
   lepesek = sz
   
-  for i=1, lepesek do
+  for i=1, lepesek / 2 do
+    turtle.forward()
+    ablak()
     turtle.forward()
   end
 
@@ -163,4 +179,6 @@ function haz(h, sz, m)
 
 end
 
-haz(5, 6, 4)
+-- haz(5, 6, 4)
+teto(4, 4)
+
